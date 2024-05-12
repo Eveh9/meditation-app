@@ -1,22 +1,22 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 
 const Login = ({ loginHandler }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <div>
       <h1>Login</h1>
       <form
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
-          loginHandler(email, password);
-          // navigate("/login");
+          await loginHandler(email, password);
+          navigate("/profile");
         }}
       >
-        <label for="email">Email:</label>
+        <label>Email:</label>
         <input
           onChange={(e) => {
             setEmail(e.target.value);
@@ -26,7 +26,7 @@ const Login = ({ loginHandler }) => {
           required
         />
 
-        <label for="password">Password:</label>
+        <label>Password:</label>
         <input
           onChange={(e) => {
             setPassword(e.target.value);
@@ -38,6 +38,7 @@ const Login = ({ loginHandler }) => {
 
         <button>Login</button>
       </form>
+      <NavLink to={"/sign-up"}>Register here</NavLink>
     </div>
   );
 };

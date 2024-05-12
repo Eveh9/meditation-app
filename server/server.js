@@ -4,6 +4,7 @@ const cors = require("cors");
 const { MongoClient } = require("mongodb");
 require("dotenv").config();
 const { MONGO_URI } = process.env;
+const { loginHandler } = require("./handlers/authentication");
 
 express()
   .use(morgan("tiny"))
@@ -14,27 +15,37 @@ express()
     })
   )
 
-  .post("/login", async (req, res) => {
-    const { email, password } = req.body;
+  .post("/login", loginHandler)
+  .post("/register", async (req, res) => {
+    const { name, email, password } = req.body;
     const client = new MongoClient(MONGO_URI);
     const db = client.db("meditation-app");
     try {
-      const foundUser = await db
-        .collection("users")
-        .findOne({ email, password });
-      res.status(200).json({
-        name: foundUser.name,
-        email: foundUser.email,
-      });
+      const foundUser = await db.collection("users").findOne({ email });
+      if (foundUser) {
+        res.status(400).json({
+          message: "Error occured while trying to create your account",
+        });
+      } else {
+        const response = await db
+          .collection("users")
+          .insertOne({ name, email, password });
+        if (response.acknowledged) {
+          res.status(200).json({
+            message: "success",
+          });
+        } else {
+          res.status(400).json({
+            message: "Error occured while trying to create your account",
+          });
+        }
+      }
     } catch (error) {
       console.log(error);
       res.status(400).json({
         message: "Error ocurred",
       });
     }
-  })
-  .post("/register", (req, res) => {
-    const { name, email, password } = req.body;
   })
   .get("*", (req, res) => {
     res.status(404).json({

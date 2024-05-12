@@ -1,24 +1,14 @@
 import { useEffect } from "react";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Home = ({ user }) => {
+  const navigate = useNavigate();
   useEffect(() => {
     if (!user) {
-      redirect("/login");
+      navigate("/login");
     }
   }, [user]);
-  return (
-    <div>
-      {user ? (
-        <div>
-          <p>{user.name}</p>
-          <p>{user.email}</p>
-        </div>
-      ) : (
-        <div />
-      )}
-    </div>
-  );
+  return <div></div>;
 };
 
 export default Home;
