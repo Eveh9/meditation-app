@@ -27,7 +27,7 @@ function App() {
         <Route element={<Login loginHandler={loginHandler} />} path="/login" />
         <Route element={<Profile user={user} />} path="/profile" />
         <Route element={<SignUp />} path="/sign-up" />
-        <Route element={<Meditation />} path="/meditation" />
+        <Route element={<Meditation user={user} />} path="/meditation" />
       </Routes>
     </BrowserRouter>
   );

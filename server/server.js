@@ -47,6 +47,34 @@ express()
       });
     }
   })
+  .post("/session", async (req, res) => {
+    const { hours, minutes, seconds, userEmail } = req.body;
+    const client = new MongoClient(MONGO_URI);
+    const db = client.db("meditation-app");
+    try {
+      const response = await db.collection("sessions").insertOne({
+        hours,
+        minutes,
+        seconds,
+        userEmail,
+      });
+      if (response.acknowledged) {
+        res.status(200).json({
+          message: "sucess",
+        });
+      } else {
+        res.status(500).json({
+          message: "an error occured while trying to save your session",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({
+        error,
+      });
+    }
+  })
+
   .get("*", (req, res) => {
     res.status(404).json({
       status: 404,
