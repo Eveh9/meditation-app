@@ -6,6 +6,11 @@ import Home from "./components/Home";
 import Profile from "./components/Profile";
 import Meditation from "./components/Meditation";
 
+const fakeUser = {
+  email: "huhu@hu.com",
+  name: "wai",
+};
+
 function App() {
   const [user, setUser] = useState();
   console.log(user);
@@ -23,11 +28,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Home user={user} />} path="/" />
+        //SWITCH FAKE USER
+        <Route element={<Home user={fakeUser} />} path="/" />
         <Route element={<Login loginHandler={loginHandler} />} path="/login" />
-        <Route element={<Profile user={user} />} path="/profile" />
+        <Route element={<Profile user={fakeUser} />} path="/profile" />
         <Route element={<SignUp />} path="/sign-up" />
-        <Route element={<Meditation user={user} />} path="/meditation" />
+        <Route element={<Meditation user={fakeUser} />} path="/meditation" />
       </Routes>
     </BrowserRouter>
   );

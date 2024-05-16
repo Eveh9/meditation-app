@@ -47,17 +47,42 @@ express()
       });
     }
   })
-  .post("/session", async (req, res) => {
-    const { hours, minutes, seconds, userEmail } = req.body;
+
+  .get("/session", async (req, res) => {
+    const userEmail = req.query.userEmail;
     const client = new MongoClient(MONGO_URI);
     const db = client.db("meditation-app");
     try {
-      const response = await db.collection("sessions").insertOne({
+      const response = await db.collection("sessions").find({
+        userEmail,
+      });
+      const data = await response.toArray();
+      res.status(200).json({
+        data,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({
+        error,
+      });
+    }
+  })
+
+  .post("/session", async (req, res) => {
+    const { hours, minutes, seconds, userEmail, timestamp } = req.body;
+    const sessionDate = {
+      userEmail,
+      timestamp,
+      session: {
         hours,
         minutes,
         seconds,
-        userEmail,
-      });
+      },
+    };
+    const client = new MongoClient(MONGO_URI);
+    const db = client.db("meditation-app");
+    try {
+      const response = await db.collection("sessions").insertOne(sessionDate);
       if (response.acknowledged) {
         res.status(200).json({
           message: "sucess",

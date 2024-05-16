@@ -48,6 +48,7 @@ const Meditation = ({ user }) => {
             minutes: timer.getTimeValues().minutes,
             seconds: timer.getTimeValues().seconds,
             userEmail: user.email,
+            timestamp: Date.now(),
           };
           const response = await fetch("http://localhost:8000/session", {
             method: "POST",
