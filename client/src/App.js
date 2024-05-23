@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import Profile from "./components/Profile";
 import Meditation from "./components/Meditation";
 
+// use this when testing to not have to log in
 const fakeUser = {
   email: "huhu@hu.com",
   name: "wai",
@@ -13,7 +14,6 @@ const fakeUser = {
 
 function App() {
   const [user, setUser] = useState();
-  console.log(user);
 
   const loginHandler = async (email, password) => {
     const body = { email, password };

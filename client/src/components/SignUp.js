@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
+import styled from "styled-components";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -18,17 +19,17 @@ const SignUp = () => {
   };
 
   return (
-    <div>
+    <Container>
       <h1>Registration</h1>
-      <form
+      <CustomForm
         onSubmit={async (e) => {
           e.preventDefault();
           SignUpHandler();
-          // navigate("/login");
+          navigate("/login");
         }}
       >
         <label>Name:</label>
-        <input
+        <CustomInput
           value={name}
           onChange={(e) => {
             setName(e.target.value);
@@ -38,7 +39,7 @@ const SignUp = () => {
         />
 
         <label>Email:</label>
-        <input
+        <CustomInput
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
@@ -48,7 +49,7 @@ const SignUp = () => {
         />
 
         <label>Password:</label>
-        <input
+        <CustomInput
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);
@@ -57,11 +58,41 @@ const SignUp = () => {
           required
         />
 
-        <button>Register</button>
-      </form>
-      <NavLink to={"/login"}>Click here to login</NavLink>
-    </div>
+        <CustomBtn>Register</CustomBtn>
+      </CustomForm>
+      <CustomNavLink to={"/login"}>Click here to login</CustomNavLink>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const CustomForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  min-width: 240px;
+  padding: 16px;
+`;
+
+const CustomInput = styled.input`
+  padding: 4px;
+  width: 100%;
+`;
+
+const CustomNavLink = styled(NavLink)`
+  text-decoration: none;
+`;
+
+const CustomBtn = styled.button`
+  padding: 8px;
+`;
 
 export default SignUp;

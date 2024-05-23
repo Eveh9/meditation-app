@@ -1,35 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-
-const fakeData = [
-  {
-    email: "hehe@he.com",
-    timestamp: 1715830773168,
-    session: {
-      hours: 3,
-      minutes: 4,
-      seconds: 6,
-    },
-  },
-  {
-    email: "hehe@he.com",
-    timestamp: 1715830773568,
-    session: {
-      hours: 5,
-      minutes: 5,
-      seconds: 5,
-    },
-  },
-  {
-    email: "hehe@he.com",
-    timestamp: 1715830774168,
-    session: {
-      hours: 7,
-      minutes: 7,
-      seconds: 7,
-    },
-  },
-];
+import styled from "styled-components";
 
 const Profile = ({ user }) => {
   const [sessions, setSessions] = useState([]);
@@ -47,32 +18,60 @@ const Profile = ({ user }) => {
     getSessions();
   }, []);
   return (
-    <div>
-      {user ? (
+    <Container>
+      {user && (
         <div>
-          <p>{user.name}</p>
-          <p>{user.email}</p>
-          <NavLink to={"/meditation"}>Meditate now</NavLink>
-          <div>
+          <ProfileInfo>
+            <h2>{user.name}</h2>
+            <h2>{user.email}</h2>
+          </ProfileInfo>
+          <LinkContainer>
+            <NavLink to={"/meditation"}>Meditate now</NavLink>
+          </LinkContainer>
+          <Sessions>
             {sessions.map((e) => {
               const date = new Date(e.timestamp);
               const day = date.getDate();
               const month = date.getMonth() + 1;
               const year = date.getFullYear();
               return (
-                <div>
+                <SessionBox>
                   <h4>{`${day}-${month}-${year}`}</h4>
-                  <p>{`hours:${e.session.hours}/minutes:${e.session.minutes}/seconds:${e.session.seconds} `}</p>
-                </div>
+                  <p>{`hours:${e.session.hours}`}</p>
+                  <p>{`minutes:${e.session.minutes}`}</p>
+                  <p>{`seconds:${e.session.seconds}`}</p>
+                </SessionBox>
               );
             })}
-          </div>
+          </Sessions>
         </div>
-      ) : (
-        <div />
       )}
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  padding: 16px;
+`;
+
+const ProfileInfo = styled.div`
+  border: 1px solid black;
+  padding: 8px;
+`;
+
+const Sessions = styled.div`
+  border: 1px solid black;
+  padding: 8px;
+`;
+
+const SessionBox = styled.div`
+  border-bottom: 1px solid black;
+  padding: 8px;
+`;
+
+const LinkContainer = styled.div`
+  border: 1px solid black;
+  padding: 8px;
+`;
 
 export default Profile;
