@@ -49,6 +49,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #fefbf3;
 `;
 
 const CustomForm = styled.form`
@@ -59,11 +60,13 @@ const CustomForm = styled.form`
   gap: 8px;
   min-width: 240px;
   padding: 16px;
+  background-color: #fefbf3;
 `;
 
 const CustomInput = styled.input`
   padding: 4px;
   width: 100%;
+  background-color: #fefbf3;
 `;
 
 const CustomNavLink = styled(NavLink)`
