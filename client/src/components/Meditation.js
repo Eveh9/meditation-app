@@ -1,6 +1,7 @@
 import useTimer from "easytimer-react-hook";
 import { useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const Meditation = ({ user }) => {
   const [timer, isTargetAchieved] = useTimer({
@@ -11,6 +12,7 @@ const Meditation = ({ user }) => {
     minutes: 0,
     seconds: 0,
   });
+  const navigate = useNavigate();
 
   console.log(user);
   return (
@@ -68,6 +70,9 @@ const Meditation = ({ user }) => {
                 body: JSON.stringify(body),
               });
               const data = await response.json();
+              if (response.status === 200) {
+                navigate("/profile");
+              }
             }}
           >
             Conclude session

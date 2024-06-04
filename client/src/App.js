@@ -7,10 +7,10 @@ import Profile from "./components/Profile";
 import Meditation from "./components/Meditation";
 
 // use this when testing to not have to log in
-const fakeUser = {
-  email: "huhu@hu.com",
-  name: "wai",
-};
+// const fakeUser = {
+//   email: "huhu@hu.com",
+//   name: "wai",
+// };
 
 function App() {
   const [user, setUser] = useState();
@@ -24,16 +24,17 @@ function App() {
     });
     const data = await response.json();
     setUser(data.user);
+    return data;
   };
   return (
     <BrowserRouter>
       <Routes>
-        //SWITCH FAKE USER
-        <Route element={<Home user={fakeUser} />} path="/" />
+        //SWITCH FAKE USER, pass the state to track the user
+        <Route element={<Home user={user} />} path="/" />
         <Route element={<Login loginHandler={loginHandler} />} path="/login" />
-        <Route element={<Profile user={fakeUser} />} path="/profile" />
+        <Route element={<Profile user={user} />} path="/profile" />
         <Route element={<SignUp />} path="/sign-up" />
-        <Route element={<Meditation user={fakeUser} />} path="/meditation" />
+        <Route element={<Meditation user={user} />} path="/meditation" />
       </Routes>
     </BrowserRouter>
   );

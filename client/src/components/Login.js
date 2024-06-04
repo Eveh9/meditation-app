@@ -5,6 +5,7 @@ import styled from "styled-components";
 const Login = ({ loginHandler }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   return (
@@ -13,8 +14,12 @@ const Login = ({ loginHandler }) => {
       <CustomForm
         onSubmit={async (e) => {
           e.preventDefault();
-          await loginHandler(email, password);
-          navigate("/profile");
+          const response = await loginHandler(email, password);
+          if (response.status === 200) {
+            navigate("/profile");
+          } else {
+            setError(true);
+          }
         }}
       >
         <label>Email:</label>
@@ -40,9 +45,13 @@ const Login = ({ loginHandler }) => {
         <CustomBtn>Login</CustomBtn>
       </CustomForm>
       <CustomNavLink to={"/sign-up"}>Register here</CustomNavLink>
+      {error === true && <ErrorMessage>Unable to authenticate</ErrorMessage>}
     </Container>
   );
 };
+const ErrorMessage = styled.p`
+  color: red;
+`;
 
 const Container = styled.div`
   display: flex;
@@ -50,6 +59,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #fefbf3;
+  height: 100vh;
 `;
 
 const CustomForm = styled.form`

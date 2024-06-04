@@ -20,10 +20,33 @@ import img17 from "../assets/img17.jpg";
 import img18 from "../assets/img18.jpg";
 
 const Home = ({ user }) => {
+  const arrayImages = [
+    img1,
+    img2,
+    img3,
+    img4,
+    img5,
+    img6,
+    img7,
+    img8,
+    img9,
+    img10,
+    img11,
+    img12,
+    img13,
+    img14,
+    img15,
+    img16,
+    img17,
+    img18,
+  ];
+  const randomIndexNumber =
+    Math.floor(Math.random() * (arrayImages.length + 1)) - 1;
+  const randomImage = arrayImages[randomIndexNumber];
   return (
     <Container>
       <ImageContainer>
-        <img src={img18}></img>
+        <img src={randomImage}></img>
       </ImageContainer>
       <ContentContainer>
         <h1>RESPIRA</h1>
@@ -31,6 +54,7 @@ const Home = ({ user }) => {
           <Link to="/login">Login</Link>
           <Link to="/sign-up">Sign up</Link>
         </LinksContainer>
+        <p>Concentrate on what you feel when you see this image</p>
       </ContentContainer>
     </Container>
   );
